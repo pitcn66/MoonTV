@@ -58,10 +58,29 @@ function PlayPageClient() {
     enable: boolean;
     intro_time: number;
     outro_time: number;
-  }>({
-    enable: false,
-    intro_time: 0,
-    outro_time: 0,
+  }>(() => {
+    // 从 localStorage 读取，如果没有则使用默认值
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('moontv_player_settings');
+      if (saved) {
+        try {
+          const settings = JSON.parse(saved);
+          return {
+            enable: settings.skipIntro ?? true,              // ✅ 默认开启
+            intro_time: settings.skipIntroTime ?? 15,        // ✅ 默认 15 秒
+            outro_time: settings.skipEndingTime ?? 15,       // ✅ 默认 15 秒
+          };
+        } catch (error) {
+          console.error('解析播放器设置失败', error);
+        }
+      }
+    }
+    // 如果没有保存的设置，使用默认值
+    return {
+      enable: true,          // ✅ 默认开启跳过
+      intro_time: 15,        // ✅ 默认 15 秒
+      outro_time: 15,        // ✅ 默认 15 秒
+    };
   });
   const skipConfigRef = useRef(skipConfig);
   useEffect(() => {
@@ -88,6 +107,33 @@ function PlayPageClient() {
   useEffect(() => {
     blockAdEnabledRef.current = blockAdEnabled;
   }, [blockAdEnabled]);
+
+  // 当 skipConfig 改变时，保存到 localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('moontv_player_settings');
+      let settings = {};
+      
+      if (saved) {
+        try {
+          settings = JSON.parse(saved);
+        } catch (error) {
+          console.error('解析设置失败', error);
+        }
+      }
+      
+      // 合并并保存设置
+      const updatedSettings = {
+        ...settings,
+        skipIntro: skipConfig.enable,
+        skipIntroTime: skipConfig.intro_time,
+        skipEndingTime: skipConfig.outro_time,
+      };
+      
+      localStorage.setItem('moontv_player_settings', JSON.stringify(updatedSettings));
+      console.log('💾 跳过设置已保存:', updatedSettings);
+    }
+  }, [skipConfig.enable, skipConfig.intro_time, skipConfig.outro_time]);
 
   // 视频基本信息
   const [videoTitle, setVideoTitle] = useState(searchParams.get('title') || '');
