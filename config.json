@@ -13,16 +13,6 @@
     "dbzy": {
       "api": "https://dbzy.tv/api.php/provide/vod",
       "name": "豆瓣资源"
-    },
-    "api_64": {
-      "name": "AV-精品资源",
-      "api": "https://www.jingpinx.com/api.php/provide/vod",
-      "detail": "https://www.jingpinx.com"
-    },
-    "api_2": {
-      "name": "AV-155资源",
-      "api": "https://155api.com/api.php/provide/vod",
-      "detail": "https://155api.com"
-     }
+    }
   }
 }
