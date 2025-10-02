@@ -492,3 +492,15 @@ export async function getAvailableApiSites(): Promise<ApiSite[]> {
     detail: s.detail,
   }));
 }
+// ==================== 播放器默认配置 ====================
+export const DEFAULT_PLAYER_SETTINGS = {
+  skipIntro: true,              // 默认开启跳过片头
+  skipEnding: false,            // 默认关闭跳过片尾（如需开启改为 true）
+  skipIntroTime: 15,            // 跳过片头时长（秒）
+  skipEndingTime: 15,           // 跳过片尾时长（秒）
+  autoSkipIntro: true,          // 自动跳过片头
+  autoSkipEnding: false,        // 自动跳过片尾
+  volume: 0.5,                  // 默认音量
+  autoPlay: false,              // 默认不自动播放
+  playbackRate: 1.0,            // 默认播放速度
+}
