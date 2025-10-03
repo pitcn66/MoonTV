@@ -67,7 +67,7 @@ function PlayPageClient() {
           const settings = JSON.parse(saved);
           return {
             enable: settings.skipIntro ?? true,              // ✅ 默认开启
-            intro_time: settings.skipIntroTime ?? 15,        // ✅ 默认 15 秒
+            intro_time: settings.skipIntroTime ?? 25,        // ✅ 默认 15 秒
             outro_time: settings.skipEndingTime ?? 15,       // ✅ 默认 15 秒
           };
         } catch (error) {
@@ -78,7 +78,7 @@ function PlayPageClient() {
     // 如果没有保存的设置，使用默认值
     return {
       enable: true,          // ✅ 默认开启跳过
-      intro_time: 15,        // ✅ 默认 15 秒
+      intro_time: 25,        // ✅ 默认 15 秒
       outro_time: 15,        // ✅ 默认 15 秒
     };
   });
